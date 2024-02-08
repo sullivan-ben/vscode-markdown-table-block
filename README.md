@@ -31,7 +31,7 @@ Table data is added as a of records with column headings as the key.
 
 This is then rendered as follows:
 
-![Simple YAML Example](https://github.com/sullivan-ben/vscode-markdown-table-block/blob/master/images/simple-example.png)
+![Simple YAML Example](https://github.com/sullivan-ben/vscode-markdown-table-block/blob/master/images/example-basic.png)
 
 ## Usage Guide
 
@@ -70,9 +70,9 @@ Basic mode uses a single yaml document with sequence nodes containing a mapping 
   # Multi-line cells can be entered using a literal scalar
 
   Column 3: |
-  Paragraph 1.
+    Paragraph 1.
 
-  Paragraph 2.
+    Paragraph 2.
 
 - Column 1: 2
 
@@ -81,28 +81,32 @@ Basic mode uses a single yaml document with sequence nodes containing a mapping 
   # Column 2: Row 2 Value
 
   Column 3: |
-  Multi-line markdown with list:
+    Multi-line markdown with list:
 
-  - Item 1
-  - Item 2
-  - Item 3
-  - Item 4
+    - Item 1
+    - Item 2
+    - Item 3
+    - Item 4
 
-  Embedded Table:
+    Embedded Table:
 
-  ```yaml:table
-  - pro: 1
-    con: 1
-  - pro: 2
-    con: 2
-  ```
+    ```yaml:table
+    - pro: 1
+      con: 1
+    - pro: 2
+      con: 2
+    ```
 
 - Column 1: 3
   Column 2: Row 3 Value
-  Column 3: "![image](../docs/logo.png)"
+  Column 3: "![image](./logo.png)"
 
 ````
 `````
+
+This is then rendered as follows:
+
+![Basic Example](https://github.com/sullivan-ben/vscode-markdown-table-block/blob/master/images/example-usage-basic.png)
 
 #### Normalized Mode
 
@@ -146,6 +150,10 @@ c3: Details
 ```
 ````
 
+This is then rendered as follows:
+
+![Normalized Example](https://github.com/sullivan-ben/vscode-markdown-table-block/blob/master/images/example-usage-normalized.png)
+
 ### JSON
 
 #### Basic Mode
@@ -167,13 +175,17 @@ Basic mode uses an an array containing an object for each record. Record keys ar
   {
     "Column 1": 3,
     "Column 2": "Row 3 Value",
-    "Column 3": "![image](../docs/logo.png)"
+    "Column 3": "![image](../images/logo.png)"
   }
 ]
 ````
 `````
 
 > **HINT**: Because json does not support multi-line input, new lines must encoded as `\n`. Take care that you do not strip spacing when using a indentation sensitive language like yaml.
+
+This is then rendered as follows:
+
+![Basic Example](https://github.com/sullivan-ben/vscode-markdown-table-block/blob/master/images/example-usage-basic.png)
 
 #### Normalized Mode
 
@@ -219,6 +231,10 @@ Contents is identical to basic mode in syntax, with the only difference being th
 }
 ```
 ````
+
+This is then rendered as follows:
+
+![Basic Example](https://github.com/sullivan-ben/vscode-markdown-table-block/blob/master/images/example-usage-basic.png)
 
 ## Installation
 

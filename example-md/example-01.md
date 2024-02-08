@@ -29,7 +29,8 @@
 - Column 1: 1
   Column 2: Row 1 Value
 
-  # Multi-line cells using a literal scalar
+  # Multi-line cells can be entered using a literal scalar
+
   Column 3: |
     Paragraph 1.
 
@@ -37,17 +38,20 @@
 
 - Column 1: 2
 
-  # Missing columns are allowed
+  # Missing columns are allowed & rendered as an empty cell
+
   # Column 2: Row 2 Value
 
   Column 3: |
     Multi-line markdown with list:
+
     - Item 1
     - Item 2
     - Item 3
     - Item 4
 
     Embedded Table:
+
     ```yaml:table
     - pro: 1
       con: 1
@@ -57,7 +61,8 @@
 
 - Column 1: 3
   Column 2: Row 3 Value
-  Column 3: "![image](../docs/logo.png)"
+  Column 3: "![image](./logo.png)"
+
 ````
 
 #### Normalized
@@ -119,7 +124,7 @@ const a = "test";
   {
     "Column 1": 3,
     "Column 2": "Row 3 Value",
-    "Column 3": "![image](../docs/logo.png)"
+    "Column 3": "![image](./logo.png)"
   }
 ]
 ````
