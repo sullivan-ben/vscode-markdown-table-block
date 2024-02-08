@@ -1,0 +1,10 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "lib": ["es2020"],
+    "sourceMap": true,
+    "noImplicitAny": false
+  },
+  "exclude": ["node_modules"]
+}

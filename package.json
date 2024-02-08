@@ -1,0 +1,93 @@
+{
+  "name": "markdown-table-block",
+  "version": "0.1.0",
+  "displayName": "Markdown Table Block",
+  "description": "Adds the ability to enter data within a codeblock and have it display as a table in VS Code's builtin markdown preview",
+  "icon": "images/logo.png",
+  "keywords": [
+    "markdown",
+    "table",
+    "data",
+    "yaml",
+    "preview"
+  ],
+  "publisher": "sullivan-ben",
+  "license": "MIT",
+  "repository": {
+    "url": "https://github.com/sullivan-ben/vscode-markdown-table-block.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sullivan-ben/vscode-markdown-table-block/issues"
+  },
+  "engines": {
+    "vscode": "^1.72.0"
+  },
+  "activationEvents": [],
+  "main": "./dist/index.js",
+  "browser": "./dist/web/index.js",
+  "categories": [
+    "Other"
+  ],
+  "contributes": {
+    "markdown.markdownItPlugins": true,
+    "configuration": {
+      "title": "Markdown Table Block",
+      "properties": {
+        "markdown-table-block.defaultLanguage": {
+          "order": 0,
+          "type": "string",
+          "enum": [
+            "json",
+            "yaml",
+            "js"
+          ],
+          "default": "yaml",
+          "description": "The markup parser to use for when just 'table' is specified as the markdown language."
+        },
+        "markdown-table-block.languageMappings": {
+          "order": 1,
+          "type": "object",
+          "default": {
+            "default": "table",
+            "yaml": "yaml:table",
+            "json": "json:table",
+            "js": "js:table"
+          },
+          "description": "Default languages mappings. Change values if names conflicts with another language."
+        }
+      }
+    }
+  },
+  "dependencies": {
+    "install": "^0.13.0",
+    "npm": "^10.4.0",
+    "yaml": "^2.3.4"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.0",
+    "@types/markdown-it": "^12.2.3",
+    "@types/react": "^18.2.54",
+    "@types/vscode": "^1.72.0",
+    "@types/vscode-notebook-renderer": "^1.72.0",
+    "babel-loader": "^8.2.2",
+    "css-loader": "^6.10.0",
+    "mermaid": "^10.6.1",
+    "mini-css-extract-plugin": "^2.2.2",
+    "npm-run-all": "^4.1.5",
+    "react": "^18.2.0",
+    "style-loader": "^3.3.4",
+    "terser-webpack-plugin": "^5.3.6",
+    "ts-loader": "^9.4.2",
+    "typescript": "^5.2.2",
+    "webpack": "^5.76.0",
+    "webpack-cli": "^5.0.1"
+  },
+  "scripts": {
+    "compile-ext": "webpack --config ./build/webpack.config.js",
+    "watch-ext": "webpack --watch --config ./build/webpack.config.js",
+    "watch-ext-web": "webpack --watch --config ./build/web-extension.webpack.config.js",
+    "package-ext": "webpack --mode production --config ./build/webpack.config.js",
+    "package-ext-web": "webpack --mode production --devtool hidden-source-map --config ./build/web-extension.webpack.config.js",
+    "vscode:prepublish": "npm-run-all package-ext package-ext-web"
+  }
+}
