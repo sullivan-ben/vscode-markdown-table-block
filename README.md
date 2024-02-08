@@ -1,8 +1,8 @@
 # Markdown Table Block
 
-Authoring large or even slightly complex markdown tables is headache inducing. Markdown Table Block introduces a user friendly alternative.
+Authoring large or even slightly complex markdown tables is headache inducing - introducing a user friendly alternative.
 
-This extension adds the ability enter table data as an array of records using `<input-language>:table` fenced code blocks, then have that render to a table in the markdown preview. This is especially useful for tables with many columns, or long cell content.
+Markdown Table Block adds the ability enter table data as an array of records using `<input-language>:table` fenced code blocks, then have that render to a table in the markdown preview. This is especially useful for tables with many columns, or long cell content.
 
 ## Flagship Features
 
@@ -31,7 +31,7 @@ Table data is added as a of records with column headings as the key.
 
 This is then rendered as follows:
 
-![Simple YAML Example](./docs/simple-example.png)
+![Simple YAML Example](https://github.com/sullivan-ben/vscode-markdown-table-block/blob/master/images/simple-example.png)
 
 ## Usage Guide
 
