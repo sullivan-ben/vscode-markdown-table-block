@@ -27,7 +27,7 @@ const config = {
   },
   resolve: {
     // support reading TypeScript and JavaScript files, 📖 -> https://github.com/TypeStrong/ts-loader
-    extensions: [".ts", ".js", ".css"],
+    extensions: [".ts", ".js"],
     // extensions: [".ts", ".tsx", ".js", ".jsx", ".css"],
   },
   module: {
@@ -42,33 +42,6 @@ const config = {
               compilerOptions: {
                 module: "es6", // override `tsconfig.json` so that TypeScript emits native JavaScript modules.
               },
-            },
-          },
-        ],
-      },
-      // // Allow importing ts(x) files:
-      // {
-      //   test: /\.tsx?$/,
-      //   loader: "ts-loader",
-      //   options: {
-      //     // transpileOnly enables hot-module-replacement
-      //     transpileOnly: true,
-      //     compilerOptions: {
-      //       // Overwrite the noEmit from the client's tsconfig
-      //       noEmit: false,
-      //     },
-      //   },
-      // },
-      // Allow importing CSS modules:
-      {
-        test: /\.css$/,
-        use: [
-          "style-loader",
-          {
-            loader: "css-loader",
-            options: {
-              importLoaders: 1,
-              modules: true,
             },
           },
         ],

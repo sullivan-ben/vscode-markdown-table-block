@@ -4,27 +4,9 @@ import yamlFormatter from "./formatters/yaml.formatter";
 import jsFormatter from "./formatters/js.formatter";
 import { extendMarkdownItWithTableBlocks } from "./table-block";
 import * as vscode from "vscode";
-import "./style.css";
 import { LangCode, SupportedLang, FormatterFn } from "./types/types";
 
 export function activate(ctx: vscode.ExtensionContext) {
-  // function customizeCSS() {
-  //   const globalStyleLessFile = utility.addFileProtocol(
-  //     path.resolve(globalConfigPath, './style.less'),
-  //   );
-  //   vscode.commands.executeCommand(
-  //     'vscode.open',
-  //     vscode.Uri.parse(globalStyleLessFile),
-  //   );
-  // }
-
-  // ctx.subscriptions.push(
-  //   vscode.commands.registerCommand(
-  //     'markdown-preview-enhanced.customizeCss',
-  //     customizeCSS,
-  //   ),
-  // );
-
   return {
     extendMarkdownIt(md: any) {
       extendMarkdownItWithTableBlocks(md, {
