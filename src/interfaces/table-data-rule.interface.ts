@@ -1,4 +1,4 @@
-import { TableData } from "./formatter-column.interface";
+import { TableData } from "./table-data.interface";
 
 export interface TableDataRule {
   error: (d: TableData) => string;

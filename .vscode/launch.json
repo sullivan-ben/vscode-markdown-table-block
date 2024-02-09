@@ -8,12 +8,32 @@
       "request": "launch",
       "runtimeExecutable": "${execPath}",
       "args": [
-        // "--disable-extensions",
+        "--disable-extensions",
         "--extensionDevelopmentPath=${workspaceFolder}"
       ],
       "outFiles": ["${workspaceFolder}/dist/**/*.js"],
       "preLaunchTask": "npm: compile-ext",
       "sourceMaps": true
+    },
+
+    // Does not seem to be working
+    // from: https://github.com/agrostar/zzapi-vscode/blob/main/.vscode/tasks.json
+    // See also:
+    // - tasks.json
+    // - https://code.visualstudio.com/docs/editor/tasks#_defining-a-problem-matcher
+    // - https://code.visualstudio.com/api/working-with-extensions/testing-extension
+    {
+      "name": "Run Extension Tests",
+      "type": "extensionHost",
+      "request": "launch",
+      "runtimeExecutable": "${execPath}",
+      "args": [
+        "--disable-extensions",
+        "--extensionDevelopmentPath=${workspaceFolder}",
+        "--extensionTestsPath=${workspaceFolder}/out/test/suite/index"
+      ],
+      "outFiles": ["${workspaceFolder}/out/test/**/*.js"],
+      "preLaunchTask": "npm: watch"
     },
     {
       "name": "Run Web Extension in VS Code",

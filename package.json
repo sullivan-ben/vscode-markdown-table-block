@@ -2,7 +2,7 @@
   "name": "markdown-table-block",
   "version": "0.2.0",
   "displayName": "Markdown Table Block",
-  "description": "Adds the ability to enter data within a codeblock and have it display as a table in VS Code's builtin markdown preview",
+  "description": "Enter table data as records and have it rendered as table using VS Code's builtin markdown preview",
   "icon": "images/logo.png",
   "keywords": [
     "markdown",
@@ -56,35 +56,58 @@
           "description": "Default languages mappings. Change values if names conflicts with another language."
         }
       }
-    }
+    },
+    "commands": [
+      {
+        "command": "markdown-table-block.convertSelectionToMarkdownTableBlock",
+        "title": "Convert Selection to Table Block",
+        "shortTitle": "To Table Block",
+        "category": "Markdown Table Block",
+        "when": "editorLangId == markdown"
+      },
+      {
+        "command": "markdown-table-block.convertSelectionToMarkdownTable",
+        "title": "Convert Selection to Markdown Table",
+        "shortTitle": "To Markdown Table",
+        "category": "Markdown Table Block",
+        "when": "editorLangId == markdown"
+      }
+    ]
   },
   "dependencies": {
     "install": "^0.13.0",
+    "javascript-stringify": "^2.1.0",
+    "markdown-it": "^14.0.0",
     "npm": "^10.4.0",
     "yaml": "^2.3.4"
   },
   "devDependencies": {
     "@babel/core": "^7.15.0",
     "@types/markdown-it": "^12.2.3",
+    "@types/mocha": "^10.0.6",
     "@types/react": "^18.2.54",
     "@types/vscode": "^1.72.0",
     "@types/vscode-notebook-renderer": "^1.72.0",
+    "@vscode/test-cli": "^0.0.6",
+    "@vscode/test-electron": "^2.3.9",
     "babel-loader": "^8.2.2",
-    "mermaid": "^10.6.1",
+    "mocha": "^10.3.0",
     "npm-run-all": "^4.1.5",
     "react": "^18.2.0",
     "terser-webpack-plugin": "^5.3.6",
     "ts-loader": "^9.4.2",
+    "ts-node": "^10.9.2",
     "typescript": "^5.2.2",
     "webpack": "^5.76.0",
     "webpack-cli": "^5.0.1"
   },
   "scripts": {
     "compile-ext": "webpack --config ./build/webpack.config.js",
-    "watch-ext": "webpack --watch --config ./build/webpack.config.js",
+    "watch-ext": "webpack --mode development --watch --config ./build/webpack.config.js",
     "watch-ext-web": "webpack --watch --config ./build/web-extension.webpack.config.js",
     "package-ext": "webpack --mode production --config ./build/webpack.config.js",
     "package-ext-web": "webpack --mode production --devtool hidden-source-map --config ./build/web-extension.webpack.config.js",
-    "vscode:prepublish": "npm-run-all package-ext package-ext-web"
+    "vscode:prepublish": "npm-run-all package-ext package-ext-web",
+    "test": "env TS_NODE_PROJECT=\"tsconfig.testing.json\" mocha"
   }
 }

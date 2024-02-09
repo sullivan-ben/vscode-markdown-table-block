@@ -1,4 +1,4 @@
-# Test
+# Examples
 
 ### JSON RAW
 
@@ -71,10 +71,11 @@
 c1: id
 c2:
   name: Title
-  styles:
+  headerStyles:
     textAlign: right
   cellStyles:
     backgroundColor: black
+    textAlign: right
 c3: Details
 ---
 - c1: 1
@@ -119,7 +120,7 @@ const a = "test";
   },
   {
     "Column 1": 2,
-    "Column 3": "Multi-line markdown with list:\n - Item 1\n - Item 2\n - Item 3\n - Item 4\n\n Embedded Table:\n\n ```yaml:table\n - pro: 1\n   con: 1\n - pro: 2\n   con: 2\n\n```"
+    "Column 3": "Multi-line markdown with list:\n - Item 1\n - Item 2\n - Item 3\n - Item 4\n\n Embedded Table:\n\n ```json:table [{ \"pro\": 1, \"con\": 1 }, { \"pro\": 2, \"con\": 2 }]```"
   },
   {
     "Column 1": 3,
@@ -137,11 +138,12 @@ const a = "test";
     "c1": "id",
     "c2": {
       "name": "Title",
-      "styles": {
+      "headerStyles": {
         "textAlign": "right"
       },
       "cellStyles": {
-        "backgroundColor": "black"
+        "backgroundColor": "black",
+        "textAlign": "right"
       }
     },
     "c3": "Details"
@@ -182,3 +184,59 @@ const a = "test";
   },
 ]
 ```
+
+## Table Conversion
+
+### Fruits
+
+| _Id_ | Name   | Color  | _Comments_                                                                                                          |
+| ---- | ------ | ------ | ------------------------------------------------------------------------------------------------------------------- |
+| F1   | Apple  | Red    | Crunchy, Sometimes green                                                                                            |
+| F2   | Orange | Orange | Fleshy, Peel before eating                                                                                          |
+| F3   | Banana | Yellow | Soft, Peel before eating</br></br>**Other comments**:</br> Experience ripeness sublimation (go from ripe to unripe) |
+
+### Vegetables
+
+| Id  | Name            | Color  | Comments                                 |
+| --- | --------------- | ------ | ---------------------------------------- |
+| V1  | Pumpkin         | Orange | Good in soup                             |
+| V2  | Brussel Sprouts | Green  | Gross. Void                              |
+| V3  | Potato          | Brown  | Boil 'em, mash 'em, stick 'em in a stew. |
+
+````yaml:table
+
+- Name: Lion
+  Color: Yellow
+  Features: |
+    - Furry
+    - Roars
+    - Carnivore
+
+    - **Sex Specific**:
+      ```yaml:table
+      - Sex: Male
+        Features: |
+          - Mane
+      - Sex: Female
+        Features: |
+          - Long Eyelashes
+      ```
+
+- Name: Hippo
+  Color: Gray
+  Features: |
+    - Big
+    - Hungry
+    - Mostly herbivore
+    - Deceptively dangerous
+
+- Name: Zebra
+  Color: White/Black
+  Features: |
+    - Stripes
+    - Fast
+    - Herbivore
+    - **Endangered**
+
+
+````

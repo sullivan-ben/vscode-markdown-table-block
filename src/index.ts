@@ -1,18 +1,42 @@
-import { MODULE_NAME, DEFAULT_LANGMAP, DEFAULT_LANGUAGE } from "./constants";
-import jsonFormatter from "./formatters/json.formatter";
-import yamlFormatter from "./formatters/yaml.formatter";
-import jsFormatter from "./formatters/js.formatter";
-import { extendMarkdownItWithTableBlocks } from "./table-block";
+import {
+  MODULE_NAME,
+  DEFAULT_LANGMAP,
+  DEFAULT_LANGUAGE,
+  MODULE_COMMANDS,
+} from "./constants";
+import { JsonParser } from "./parsers/json.parser";
+import { YamlParser } from "./parsers/yaml.parser";
+import { JsParser } from "./parsers/js.parser";
+import { extendMarkdownItWithTableBlocks } from "./markdown-preview";
 import * as vscode from "vscode";
-import { LangCode, SupportedLang, FormatterFn } from "./types/types";
+import { LangCode, SupportedLang } from "./types/types";
+import { LangParser } from "./interfaces/lang-parser.interface";
+import {
+  convertSelectionToMarkdownTable,
+  convertSelectionToMarkdownTableBlock,
+} from "./editor-commands";
 
 export function activate(ctx: vscode.ExtensionContext) {
+  ctx.subscriptions.push(
+    vscode.commands.registerCommand(
+      MODULE_COMMANDS.CONVERT_SELECTION_TO_MARKDOWN_TABLE_BLOCK,
+      convertSelectionToMarkdownTableBlock
+    )
+  );
+
+  ctx.subscriptions.push(
+    vscode.commands.registerCommand(
+      MODULE_COMMANDS.CONVERT_SELECTION_TO_MARKDOWN_TABLE,
+      convertSelectionToMarkdownTable
+    )
+  );
+
   return {
     extendMarkdownIt(md: any) {
       extendMarkdownItWithTableBlocks(md, {
-        langFormatterMap: mapRuntimeFormatters(
+        langParserMap: mapRuntimeParsers(
           vscode.workspace.getConfiguration(MODULE_NAME),
-          getFormatterFn
+          getParser
         ),
       });
       md.use(injectTableBlockTheme);
@@ -26,17 +50,14 @@ export function activate(ctx: vscode.ExtensionContext) {
  * Get the formatter function, given a language code.
  *
  * @param langCode either "default" or the language code for a supported markup language (yaml, json, js)
- * @param defaultLang language code for formatter to use if langCode is "default"
+ * @param defaultLang language code for formatter to use if langCode matches the default (e.g. "table")
  * @returns
  */
-function getFormatterFn(
-  langCode: LangCode,
-  defaultLang: SupportedLang
-): FormatterFn {
+function getParser(langCode: LangCode, defaultLang: SupportedLang): LangParser {
   const formatters = {
-    yaml: yamlFormatter.formatHTML,
-    json: jsonFormatter.formatHTML,
-    js: jsFormatter.formatHTML,
+    yaml: YamlParser,
+    json: JsonParser,
+    js: JsParser,
   };
 
   return langCode === "default"
@@ -51,19 +72,19 @@ function getFormatterFn(
  * { [userEnteredLanguageCode]: [(code) => formattedHTMLTable] }
  *
  * @param config extension VSCode config
- * @param getFormatterFn function to get formatter function for a given language code
+ * @param getParser The interface for parsing string to table data for a given language code
  * @returns
  */
-function mapRuntimeFormatters(
+function mapRuntimeParsers(
   config: vscode.WorkspaceConfiguration,
-  getFormatterFn: (l: LangCode, defaultLang: SupportedLang) => FormatterFn
-): Record<string, FormatterFn> {
+  getParser: (l: LangCode, defaultLang: SupportedLang) => LangParser
+): Record<string, LangParser> {
   const defaultLang = config.get("defaultLanguage", DEFAULT_LANGUAGE);
   const configMap = config.get("languageMappings", DEFAULT_LANGMAP);
 
   const languageMappings = Object.entries(configMap) as [LangCode, string][];
   const lookupTable = languageMappings.reduce(
-    (p, [k, v]) => ({ ...p, [v]: getFormatterFn(k, defaultLang) }),
+    (p, [k, v]) => ({ ...p, [v]: getParser(k, defaultLang) }),
     {}
   );
   return lookupTable;

@@ -1,47 +1,45 @@
-import { parseAllDocuments } from "yaml";
-import jsFormatter from "./js.formatter";
+import { TableData } from "../interfaces/table-data.interface";
 import { LangFormatter } from "../interfaces/lang-formatter.interface";
-import { TableData } from "../interfaces/formatter-column.interface";
-import validateTableData from "../validators/table-data.validator";
+import { Document, ToStringOptions, parseDocument, stringify } from "yaml";
 
-/**
- * Convert yaml data into a HTML table
- * @param data
- * @param md
- * @returns
- */
-function formatHTML(data: TableData | string, md: markdownit) {
-  if (typeof data !== "string") {
-    return jsFormatter.formatHTML(validateTableData(data), md);
-  }
+function formatDocument(doc): string {
+  doc.contents.items.forEach((item, i) => {
+    if (i === 0) return; // first item already has a space before
+    item.spaceBefore = true;
+  });
 
-  const parsedDocs = parseAllDocuments(data);
+  const options: ToStringOptions = {
+    blockQuote: "literal",
+    collectionStyle: "block",
+  };
 
-  if (parsedDocs.length === 1) {
-    return jsFormatter.formatHTML(
-      // confusingly contents.toJSON() actually returns js, not json
-      validateTableData({ contents: parsedDocs[0].contents?.toJSON() }),
-      md
-    );
-  }
+  const str = doc.toString(options);
 
-  if (parsedDocs.length === 2) {
-    return jsFormatter.formatHTML(
-      validateTableData({
-        headers: parsedDocs[0]?.toJSON(),
-        contents: parsedDocs[1]?.toJSON(),
-      }),
-      md
-    );
-  }
-
-  throw new Error(
-    "Expecting 1 or 2 yaml documents. Found: " + parsedDocs.length
-  );
+  // yaml module uses keep chomping syntax and has no option to change to clip
+  // See:
+  // - yaml spec: https://yaml.org/spec/1.2.2/#8112-block-chomping-indicator
+  // - yaml module docs: https://eemeli.org/yaml/#tostring-options
+  const withClipChomp = str.replace(/: \|-/g, ": |");
+  return withClipChomp;
 }
 
-const jsonFormatter: LangFormatter = {
-  formatHTML,
-};
+function format(
+  data: TableData,
+  nestedContentRenderer?: (data: string) => string
+): string {
+  const docs: Document[] = [];
 
-export default jsonFormatter;
+  // We're stringifying, then parsing because yaml library doesn't provide
+  // adequate options to update data using stringify - and we need to
+  const toYamlDoc = (data: any): Document => parseDocument(stringify(data));
+
+  if (data.headers) docs.push(toYamlDoc(data.headers));
+  docs.push(toYamlDoc(data.contents));
+
+  const formattedDocs = docs.map((doc) => formatDocument(doc));
+  return formattedDocs.join("\n---\n");
+}
+
+export const YamlFormatter: LangFormatter = {
+  format,
+};

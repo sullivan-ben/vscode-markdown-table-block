@@ -1,8 +1,8 @@
 # Markdown Table Block
 
-Authoring large or even slightly complex markdown tables is headache inducing - introducing a user friendly alternative for vscode.
+Authoring large markdown tables is a headache! Introducing a user friendly alternative that makes table entry as simple as writing a list.
 
-Markdown Table Block adds the ability enter table data as an array of records using `<input-language>:table` fenced code blocks, then have that render to a table in the markdown preview. This is especially useful for tables with many columns, or long cell content.
+Markdown table block is a vscode extension that enables tables to be written as a set of records inside a code block. This easy to manage input will be rendered to a table in the markdown preview view - just as if you were still using old fashioned markdown tables.
 
 ## Flagship Features
 
@@ -11,10 +11,11 @@ Markdown Table Block adds the ability enter table data as an array of records us
 - **Embedded Markdown**: Use markdown inside table cells - even images!
 - **Nested Tables**: Want a table in a table cell - just add another markdown table block codeblock in that cell value.
 - **Custom Styles**: Use normalized entry mode to add per-table styles
+- **Conversion Utilities**: Use commands to convert to/from markdown table to markdown table block
 
 ## Basic Example
 
-Table data is added as a of records with column headings as the key.
+Table data is added inside a code block with the tag `<input-language>:table`. In basic mode, the data is formatted as an array of records with column headings as the key.
 
 ````markdown
 ```yaml:table
@@ -33,12 +34,23 @@ This is then rendered as follows:
 
 ![Simple YAML Example](images/example-basic.png)
 
-## Usage Guide
+## Converting Existing Tables
+
+| Command                                 | Description                                                                                                                                           |
+| --------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Convert Selection to Table Block**    | All markdown tables in selection are converted to a markdown table block. Provides a prompt to select which supported language to format the data in. |
+| **Convert Selection to Markdown Table** | All markdown table blocks in selection are converted back to a markdown table                                                                         |
+
+Example:
+
+![Convert to-from Markdown Table](/images/conversion-commands.gif)
+
+## Authoring Tables
 
 Each language has two modes:
 
 - **Basic Mode**: Data is entered as an array of row objects (i.e. records), or the input language equivalent. Column headings and cell values are parsed from the respective keys and values of each object.
-- **Normalized Mode**: Enables custom table styling and reduces redundant data entry for long tables by alowing column headings to be written once and mapped to a reference key for each row record.
+- **Normalized Mode**: For more complex tables, this enables custom table styling and reduces redundant data entry. For example, in long tables it allows column headings to be written once and mapped to a shorter reference key for each row record to simplify input.
 
   Data structure is language dependent, but the general rule is that it is entered as two sections:
 
@@ -50,10 +62,10 @@ Each language has two modes:
     2. An object with the following properties:
 
        - **name** _(required)_: A string value to be used as the column heading.
-       - **style** _(optional)_: An object containing cammel case equivalent of css properties. These are applied to both header and content cells.
-       - **cellStyle** _(optional)_: An object containing cammel case equivalent of css properties. These are applied to both header and content cells.
+       - **headerCellStyles** _(optional)_: An object containing cammel case equivalent of css properties. These are applied to both header and content cells.
+       - **cellStyles** _(optional)_: An object containing cammel case equivalent of css properties. These are applied to both header and content cells.
 
-  - **Content**: An array of row objects as in basic mode. The only difference is that the record key values are replaced when the table is rendered in preview mode.
+  - **Content**: An array of row objects. The only difference to basic mode is that the record key values are replaced when the table is rendered in preview mode.
 
 ### YAML
 
@@ -118,14 +130,13 @@ Normalized mode uses a two yaml documents separated by document separator (`---`
 c1: id
 c2:
   name: Title
-  styles:
+  headerCellStyles:
     textAlign: right
   cellStyles:
     backgroundColor: black
+    textAlign: right
 c3: Details
-
 ---
-# Contents document
 - c1: 1
   c2: Row 1 Value
   c3: |
@@ -202,11 +213,12 @@ Contents is identical to basic mode in syntax, with the only difference being th
     "c1": "id",
     "c2": {
       "name": "Title",
-      "styles": {
+      "headerCellStyles": {
         "textAlign": "right"
       },
       "cellStyles": {
-        "backgroundColor": "black"
+        "backgroundColor": "black",
+        "textAlign": "right"
       }
     },
     "c3": "Details"
@@ -242,6 +254,23 @@ Search for "Markdown Table Block" in the VS Code Extension Marketplace
 
 ## Configuration
 
-- `markdown-table-block.defaultLanguage` — Configures the language to be rendered when the 'default' language tag is used, i.e. `table`. Allowed values are the supported languages (e.g. json, yaml, js).
+### `markdown-table-block.defaultLanguage`
 
-- `markdown-table-block.languageMappings` — Allows override the language tags for each supported language AND the default tag.
+Configures the language to be rendered when the 'default' language tag is used, i.e. `table`. Allowed values are the supported languages (e.g. json, yaml, js).
+
+Default: `yaml`
+
+### `markdown-table-block.languageMappings`
+
+Allows override the language tags for each supported language AND the default tag.
+
+Default values:
+
+```JSON
+{
+  "default": "table",
+  "yaml": "table:yaml",
+  "json": "table:json",
+  "js": "table:js",
+}
+```
