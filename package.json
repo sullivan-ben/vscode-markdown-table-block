@@ -1,6 +1,6 @@
 {
   "name": "markdown-table-block",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "displayName": "Markdown Table Block",
   "description": "Adds the ability to enter data within a codeblock and have it display as a table in VS Code's builtin markdown preview",
   "icon": "images/logo.png",
