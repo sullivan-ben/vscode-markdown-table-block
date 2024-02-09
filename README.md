@@ -1,6 +1,6 @@
 # Markdown Table Block
 
-Authoring large or even slightly complex markdown tables is headache inducing - introducing a user friendly alternative.
+Authoring large or even slightly complex markdown tables is headache inducing - introducing a user friendly alternative for vscode.
 
 Markdown Table Block adds the ability enter table data as an array of records using `<input-language>:table` fenced code blocks, then have that render to a table in the markdown preview. This is especially useful for tables with many columns, or long cell content.
 
@@ -31,7 +31,7 @@ Table data is added as a of records with column headings as the key.
 
 This is then rendered as follows:
 
-![Simple YAML Example](https://github.com/sullivan-ben/vscode-markdown-table-block/blob/master/images/example-basic.png)
+![Simple YAML Example](images/example-basic.png)
 
 ## Usage Guide
 
@@ -106,7 +106,7 @@ Basic mode uses a single yaml document with sequence nodes containing a mapping 
 
 This is then rendered as follows:
 
-![Basic Example](https://github.com/sullivan-ben/vscode-markdown-table-block/blob/master/images/example-usage-basic.png)
+![Basic Example](images/example-usage-basic.png)
 
 #### Normalized Mode
 
@@ -152,7 +152,7 @@ c3: Details
 
 This is then rendered as follows:
 
-![Normalized Example](https://github.com/sullivan-ben/vscode-markdown-table-block/blob/master/images/example-usage-normalized.png)
+![Normalized Example](images/example-usage-normalized.png)
 
 ### JSON
 
@@ -185,7 +185,7 @@ Basic mode uses an an array containing an object for each record. Record keys ar
 
 This is then rendered as follows:
 
-![Basic Example](https://github.com/sullivan-ben/vscode-markdown-table-block/blob/master/images/example-usage-basic.png)
+![Basic Example](images/example-usage-basic.png)
 
 #### Normalized Mode
 
@@ -234,7 +234,7 @@ Contents is identical to basic mode in syntax, with the only difference being th
 
 This is then rendered as follows:
 
-![Basic Example](https://github.com/sullivan-ben/vscode-markdown-table-block/blob/master/images/example-usage-basic.png)
+![Basic Example](images/example-usage-basic.png)
 
 ## Installation
 
