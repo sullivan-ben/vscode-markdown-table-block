@@ -1,6 +1,6 @@
 {
   "name": "markdown-table-block",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "displayName": "Markdown Table Block",
   "description": "Enter table data as records and have it rendered as table using VS Code's builtin markdown preview",
   "icon": "images/logo.png",
